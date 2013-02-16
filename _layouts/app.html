@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Sets</title>
+<meta name="viewport"
+   content="maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
+<!-- width=device-width causes the iPhone 5 to letterbox the app, so
+we want to exclude it for iPhone 5 to allow full screen apps -->
+<meta name="viewport"
+  content="initial-scale=1.0,user-scalable=no,maximum-scale=1"
+  media="(device-height: 568px)" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="apple-touch-icon" href="/images/touch-icon.png" />
+{% css_asset_tag global %}
+- /_assets/css/manifest.scss
+{% endcss_asset_tag %}
+{% javascript_asset_tag global %}
+- /_assets/js/modernizr.js
+- /_assets/js/jquery-1.9.1.js
+- /_assets/js/hammer.js
+- /_assets/js/dragdrop.js
+- /_assets/js/underscore.js
+- /_assets/js/backbone.js
+- /_assets/js/backbone-localstorage.js
+- /_assets/js/song.coffee
+- /_assets/js/app.coffee
+{% endjavascript_asset_tag %}
+</head>
+<body>
+
+{{ content }}
+
+</body>
+</html>

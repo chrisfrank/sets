@@ -1,0 +1,19 @@
+$color_text: #616767;
+$color_light: #e5e6e8;
+$color_dark: #242021;
+$color_red: #ac4f4a;
+
+html {
+  background: $color_dark;
+  color: $color_light;
+  font-family: sans-serif;
+  font-weight: bold;
+}
+
+.song {
+  background: $color_light;
+  color: $color_dark;
+  border-top: 1px solid white;
+  border-bottom: 1px solid #aaa;
+  text-shadow: 0 1px 0 white;
+}

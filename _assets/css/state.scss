@@ -1,0 +1,7 @@
+.is_dragging {
+  -webkit-transform: scale(1.05);
+}
+.is_editing {
+  input { display: inline-block; }
+  h3 { display: none; }
+}

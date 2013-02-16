@@ -1,5 +1,7 @@
-.is_dragging {
-  -webkit-transform: scale(1.05);
+.ui-sortable-helper {
+  -webkit-transform: scale(1.025);
+  background-color: #303030;
+  background-color: rgba(48,48,48,.7);
 }
 .is_editing {
   input { display: inline-block; }

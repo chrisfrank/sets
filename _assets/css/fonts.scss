@@ -1,0 +1,47 @@
+@font-face {
+	font-family: 'typicons';
+	src:url('/fonts/typicons.eot');
+	src:url('/fonts/typicons.eot?#iefix') format('embedded-opentype'),
+		url('/fonts/typicons.woff') format('woff'),
+		url('/fonts/typicons.ttf') format('truetype'),
+		url('/fonts/typicons.svg#typicons') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* Use the following CSS code if you want to use data attributes for inserting your icons */
+[data-icon]:before {
+	font-family: 'typicons';
+	content: attr(data-icon);
+	speak: none;
+	font-weight: normal;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+}
+
+/* Use the following CSS code if you want to have a class per icon */
+/*
+Instead of a list of all class selectors,
+you can use the generic selector below, but it's slower:
+[class*="icon-"]:before {
+*/
+.icon-list:before, .icon-mail:before, .icon-minus:before, .icon-equals:before {
+	font-family: 'typicons';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+}
+.icon-list:before {
+	content: "\31";
+}
+.icon-mail:before {
+	content: "\32";
+}
+.icon-minus:before {
+	content: "\33";
+}
+.icon-equals:before {
+	content: "\34";
+}

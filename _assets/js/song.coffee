@@ -24,7 +24,7 @@ nep.SongView = Backbone.View.extend
   render: ->
     this.$el.html("<input autocorrect='none' type='text' " +
       "value='#{this.model.attributes.name}'/>" +
-      "<i class='icon-handle'></i>").hammer()
+      "<div class='handle'><i class='icon-list'></i></div>").hammer()
     return this
 
   edit: (e) ->
@@ -73,30 +73,11 @@ nep.SetListView = Backbone.View.extend
     @collection.fetch()
     @add song for song in @collection.models
     $('body').append @el
-    @$el.dragdrop
-      dragClass: "is_dragging"
-      makeClone: true
-      sourceHide: true
-      canDrag: ($src, event) =>
-        $t = $(event.target)
-        if $t.hasClass('icon-handle')
-          @src = $t.closest('li')
-          @srcIndex = @src.index()
-          @dstIndex = @srcIndex
-          return @src
-        else
-          return null
-      canDrop: ($dst) =>
-        if $dst.is "li"
-          @dstIndex = $dst.index()
-          if @srcIndex < @dstIndex
-            @src.insertAfter $dst
-          else
-            @src.insertBefore $dst
-          true
-        else
-          true
-      didDrop: ($src, $dst) =>
+    @$el.sortable
+      axis: "y"
+      handle: ".handle"
+      cursor: "move"
+      stop: (e) =>
         @collection.repositionAll()
 
   newSong: ->

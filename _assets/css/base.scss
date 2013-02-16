@@ -5,7 +5,7 @@ html, body {
   display: block;
 }
 body {
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.5em;
 }
 ul, ol {
@@ -19,4 +19,7 @@ em {
 }
 i {
   font-style: normal;
+}
+a {
+  text-decoration: none;
 }

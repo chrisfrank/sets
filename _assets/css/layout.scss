@@ -1,0 +1,30 @@
+#header {
+  margin: 0 auto;
+  height: 4em;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-width: 300px;
+  .sized {
+    position: relative;
+    padding: 1em;
+    > * {
+        font-size: 1.5em;
+        line-height: 1.5em;
+        margin: 0;
+        padding: 0;
+        display: block;
+      }
+    a {
+      padding: .4em .50em .2em;
+    }
+  }
+  h1 {
+    float: left;
+  }
+  #send {
+    float: right;
+    text-align: right;
+  }
+}

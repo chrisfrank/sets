@@ -131,7 +131,6 @@ a {
 .setlist:empty:after {
   content: "Tap to add a song.";
   display: block;
-  text-align: center;
   padding: 1em; }
 
 .song {

@@ -12,4 +12,4 @@ $ ->
     songs = ""
     $(nep.app.list.models).each ->
       songs += "#{this.attributes.name}\n"
-    $(this).attr('href', "mailto:?subject=Setlist&body=#{encodeURIComponent(songs)}")
+    $(this).attr('href', "mailto:?subject=Set%20List&body=#{encodeURIComponent(songs)}")

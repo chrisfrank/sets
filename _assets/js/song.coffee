@@ -15,31 +15,62 @@ nep.SongView = Backbone.View.extend
   id: ->
     "song_#{this.model.id}"
   events: ->
-    "click": "edit"
-    "keypress input": "done"
-    "swipeleft": "delete"
+    'touchstart': 'ontouchstart'
+    'touchmove': 'ontouchmove'
+    'touchend': 'ontouchend'
   initialize: ->
+    @draggable = false
     @render()
-
   render: ->
-    this.$el.html("<input autocorrect='none' type='text' " +
-      "value='#{this.model.attributes.name}'/>" +
-      "<div class='handle'><i class='icon-list'></i></div>").hammer()
+    this.$el.html(this.model.attributes.name)
     return this
-
-  edit: (e) ->
-    e.stopPropagation()
-    this.$el.addClass('is_editing').find('input').focus()
-
-  done: (e) ->
-    e.stopPropagation()
-    if e.keyCode == 13
-      name = this.$el.find('input').val()
-      this.model.set('name', name).save()
-      this.render().$el.removeClass('is_editing')
-
-  delete: (e) ->
+  destroy: (e) ->
     this.model.destroy()
+
+  ontouchstart: (e) ->
+    @start = {
+      pageX: e.touches[0].pageX
+      pageY: e.touches[0].pageY
+      time: Number( new Date() )
+    }
+    @deltaY = 0
+    @timer = window.setTimeout( =>
+      @clone = @$el.clone().addClass("clone").insertAfter(@el)
+      @$el.addClass('is_dragging')
+      @$el.css('top', @clone.offset().top)
+      @draggable = true
+    , 150)
+
+  ontouchmove:(e) ->
+    window.clearTimeout @timer
+    return unless @draggable
+    @last = if @deltaY? then @deltaY else 0
+    @deltaY = e.touches[0].pageY - @start.pageY
+    if @last > @deltaY
+      @direction = "up"
+    else if @last < @deltaY
+      @direction = "down"
+    else
+      @direction = null
+    transform = "translate3d(0,#{@deltaY}px,0)"
+    @el.style.webkitTransform = transform
+    nextElem = @clone.next()
+    prevElem = @clone.prev(".song:not(.is_dragging)")
+    if @direction == "down"
+      if @$el.offset().top >= nextElem.offset()?.top
+        @clone.insertAfter nextElem
+    else if @direction == "up"
+      if @$el.offset().top <= prevElem.offset()?.top
+        @clone.insertBefore prevElem
+
+  ontouchend:(e) ->
+    return unless @draggable
+    e.preventDefault()
+    @$el.removeClass('is_dragging').css('top','0').insertAfter(@clone)
+    @clone.remove()
+    @el.style.webkitTransform = ""
+    @model.collection.repositionAll()
+    @draggable = false
 
 nep.SetList = Backbone.Collection.extend
   model: nep.Song
@@ -73,18 +104,11 @@ nep.SetListView = Backbone.View.extend
     @collection.fetch()
     @add song for song in @collection.models
     $('body').append @el
-    @$el.sortable
-      axis: "y"
-      handle: ".handle"
-      cursor: "move"
-      stop: (e) =>
-        @collection.repositionAll()
 
-  newSong: ->
+   newSong: ->
     @collection.add({
       name: ""
     })
-    $("li").last().trigger 'click'
 
   add: (song) ->
     li = new nep.SongView
@@ -92,5 +116,4 @@ nep.SetListView = Backbone.View.extend
     this.$el.append li.el
 
   remove: (song) ->
-    $("#song_#{song.id}").slideUp ->
-      $(this).remove()
+    $("#song_#{song.id}").remove()

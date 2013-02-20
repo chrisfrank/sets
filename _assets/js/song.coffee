@@ -69,6 +69,7 @@ nep.SongView = Backbone.View.extend
     e.preventDefault()
     @$el.removeClass('is_dragging').css('top','0').insertAfter(@clone)
     @clone.remove()
+    $(".clone").remove()
     @el.style.webkitTransform = ""
     @model.collection.repositionAll()
     @draggable = false

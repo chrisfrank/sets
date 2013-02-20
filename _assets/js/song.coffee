@@ -53,7 +53,7 @@ nep.SongView = Backbone.View.extend
       @direction = "down"
     else
       @direction = null
-    transform = "translate3d(0,#{@deltaY}px,0)"
+    transform = "translate3d(0,#{@deltaY}px,0) scale(1.025)"
     @el.style.webkitTransform = transform
     nextElem = @clone.next()
     prevElem = @clone.prev(".song:not(.is_dragging)")

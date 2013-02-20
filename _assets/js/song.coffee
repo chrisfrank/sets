@@ -44,6 +44,7 @@ nep.SongView = Backbone.View.extend
   ontouchmove:(e) ->
     window.clearTimeout @timer
     return unless @draggable
+    e.preventDefault()
     @last = if @deltaY? then @deltaY else 0
     @deltaY = e.touches[0].pageY - @start.pageY
     if @last > @deltaY

@@ -2936,7 +2936,7 @@ Backbone.sync = function(method, model, options, error) {
       } else {
         this.direction = null;
       }
-      transform = "translate3d(0," + this.deltaY + "px,0)";
+      transform = "translate3d(0," + this.deltaY + "px,0) scale(1.025)";
       this.el.style.webkitTransform = transform;
       nextElem = this.clone.next();
       prevElem = this.clone.prev(".song:not(.is_dragging)");

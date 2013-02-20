@@ -2957,6 +2957,7 @@ Backbone.sync = function(method, model, options, error) {
       e.preventDefault();
       this.$el.removeClass('is_dragging').css('top', '0').insertAfter(this.clone);
       this.clone.remove();
+      $(".clone").remove();
       this.el.style.webkitTransform = "";
       this.model.collection.repositionAll();
       return this.draggable = false;

@@ -2926,6 +2926,7 @@ Backbone.sync = function(method, model, options, error) {
       if (!this.draggable) {
         return;
       }
+      e.preventDefault();
       this.last = this.deltaY != null ? this.deltaY : 0;
       this.deltaY = e.touches[0].pageY - this.start.pageY;
       if (this.last > this.deltaY) {

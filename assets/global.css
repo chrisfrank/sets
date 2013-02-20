@@ -92,6 +92,9 @@ i {
 a {
   text-decoration: none; }
 
+* {
+  -webkit-user-select: none; }
+
 #header {
   margin: 0 auto;
   height: 4em;
@@ -135,41 +138,28 @@ a {
 
 .song {
   margin: 0;
-  padding: 1em 1em 1em 5em;
+  padding: 1em;
   display: block;
   position: relative;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  -webkit-transition: -webkit-transform 0.2s; }
-  .song input {
-    margin: 0;
-    padding: 0;
-    font-size: 1em;
-    height: 1.5em;
-    background: none;
-    border: none;
-    font-family: inherit;
-    font-weight: bold; }
-  .song input:focus {
-    outline: none; }
-  .song .handle {
-    display: block;
-    cursor: move;
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    font-size: 2em;
-    text-align: center;
-    line-height: 2em; }
+  cursor: move;
+  text-shadow: none;
+  -webkit-transform: translate3d(0, 0, 0);
+  -webkit-user-select: none; }
 
-.ui-sortable-helper {
-  -webkit-transform: scale(1.025);
-  background-color: #303030;
-  background-color: rgba(48, 48, 48, 0.7); }
+.clone {
+  visibility: hidden; }
 
 .is_editing input {
   display: inline-block; }
 .is_editing h3 {
   display: none; }
+
+.is_dragging {
+  -webkit-transform: scale(1.025);
+  background-color: #303030;
+  z-index: 10;
+  position: absolute;
+  width: 100%; }

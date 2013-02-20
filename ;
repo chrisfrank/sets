@@ -1,0 +1,33 @@
+.setlist {
+  padding: 4em 0 6em;
+  min-height: 100%;
+  box-sizing: border-box;
+  max-width: 32em;
+  margin: 0 auto;
+}
+.sized {
+  max-width: 32em;
+  margin: 0 auto;
+}
+
+.setlist:empty:after {
+  content: "Tap to add a song.";
+  display: block;
+  padding: 1em;
+}
+
+.song {
+  margin: 0;
+  padding: 1em;
+  display: block;
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: move;
+  text-shadow: none;
+  -webkit-transform: translate3d(0,0,0);
+  -webkit-user-select: none;
+  -webkit-transition: all .2s
+}
+.clone { visibility: hidden; }

@@ -53,7 +53,12 @@ html {
   text-shadow: 0 1px 0 white; }
   .song input {
     color: #e5e6e8;
-    -webkit-font-smoothing: antialiased; }
+    -webkit-font-smoothing: antialiased;
+    font-family: sans-serif;
+    font-size: 1em;
+    font-weight: bold; }
+    .song input:focus {
+      outline: none; }
 
 .handle {
   border-right: 1px solid #444444;
@@ -74,7 +79,7 @@ html, body {
   display: block; }
 
 body {
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.5em; }
 
 ul, ol {
@@ -91,9 +96,6 @@ i {
 
 a {
   text-decoration: none; }
-
-* {
-  -webkit-user-select: none; }
 
 #header {
   margin: 0 auto;
@@ -125,10 +127,11 @@ a {
   min-height: 100%;
   box-sizing: border-box;
   max-width: 32em;
-  margin: 0 auto; }
+  margin: 0 auto;
+  position: relative; }
 
 .sized {
-  max-width: 32em;
+  max-width: 30em;
   margin: 0 auto; }
 
 .setlist:empty:after {
@@ -147,19 +150,32 @@ a {
   cursor: move;
   text-shadow: none;
   -webkit-transform: translate3d(0, 0, 0);
-  -webkit-user-select: none; }
+  -webkit-user-select: none;
+  -webkit-transition: all 0.4s; }
+  .song * {
+    margin: 0;
+    line-height: 1em; }
+  .song input {
+    color: white;
+    background: none;
+    border: none;
+    width: 100%; }
 
 .clone {
   visibility: hidden; }
 
-.is_editing input {
+.is_editable input {
   display: inline-block; }
-.is_editing h3 {
+.is_editable h3 {
   display: none; }
 
 .is_dragging {
   -webkit-transform: scale(1.025);
+  -webkit-transition: none;
   background-color: #303030;
   z-index: 10;
   position: absolute;
   width: 100%; }
+
+.is_deleting {
+  -webkit-transform: translate3d(-200%, 0, 0); }

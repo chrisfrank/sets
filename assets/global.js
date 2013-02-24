@@ -2875,7 +2875,8 @@ Backbone.sync = function(method, model, options, error) {
         position: this.collection.next()
       };
     },
-    reposition: function() {
+    reposition: function(index) {
+      $("#song_" + this.id).siblings().each(function() {});
       this.set('position', $("#song_" + this.id).index() + 1);
       return this.save();
     }
@@ -2891,15 +2892,19 @@ Backbone.sync = function(method, model, options, error) {
       return {
         'touchstart': 'ontouchstart',
         'touchmove': 'ontouchmove',
-        'touchend': 'ontouchend'
+        'touchend': 'ontouchend',
+        'keypress': 'onkeypress',
+        'click': 'onclick'
       };
     },
     initialize: function() {
       this.draggable = false;
+      this.deletable = true;
       return this.render();
     },
     render: function() {
       this.$el.html(this.model.attributes.name);
+      this.$el.data('id', this.model.attributes.id);
       return this;
     },
     destroy: function(e) {
@@ -2914,7 +2919,7 @@ Backbone.sync = function(method, model, options, error) {
       };
       this.deltaY = 0;
       return this.timer = window.setTimeout(function() {
-        _this.clone = _this.$el.clone().addClass("clone").insertAfter(_this.el);
+        _this.clone = _this.$el.clone().attr('id', '').addClass("clone").insertAfter(_this.el);
         _this.$el.addClass('is_dragging');
         _this.$el.css('top', _this.clone.offset().top);
         return _this.draggable = true;
@@ -2922,7 +2927,12 @@ Backbone.sync = function(method, model, options, error) {
     },
     ontouchmove: function(e) {
       var nextElem, prevElem, transform, _ref, _ref1;
-      window.clearTimeout(this.timer);
+      this.deltaX = e.touches[0].pageX - this.start.pageX;
+      this.deltaT = Number(new Date()) - this.start.time;
+      if (this.deltaT < 150 && Math.abs(this.deltaX) > 50) {
+        window.clearTimeout(this.timer);
+        this["delete"]();
+      }
       if (!this.draggable) {
         return;
       }
@@ -2951,6 +2961,7 @@ Backbone.sync = function(method, model, options, error) {
       }
     },
     ontouchend: function(e) {
+      window.clearTimeout(this.timer);
       if (!this.draggable) {
         return;
       }
@@ -2961,6 +2972,45 @@ Backbone.sync = function(method, model, options, error) {
       this.el.style.webkitTransform = "";
       this.model.collection.repositionAll();
       return this.draggable = false;
+    },
+    onkeypress: function(e) {
+      if (e.keyCode !== 13) {
+        return;
+      }
+      return this.done();
+    },
+    onclick: function(e) {
+      e.preventDefault();
+      return e.stopPropagation();
+    },
+    edit: function() {
+      var _this = this;
+      this.input = $("<input type='text'>");
+      return this.input.appendTo(this.$el).focus().on("blur", function() {
+        return _this.done();
+      });
+    },
+    done: function() {
+      var name;
+      name = this.input.val();
+      if (name.length < 1) {
+        return this.model.destroy();
+      } else {
+        this.model.set("name", name);
+        this.model.save();
+        return this.render();
+      }
+    },
+    "delete": function() {
+      var _this = this;
+      if (!this.deletable) {
+        return;
+      }
+      this.deletable = false;
+      return this.$el.addClass('is_deleting').one("webkitTransitionEnd", function() {
+        _this.model.destroy();
+        return $('.is_deleting').remove();
+      });
     }
   });
 
@@ -2983,14 +3033,20 @@ Backbone.sync = function(method, model, options, error) {
       }
     },
     repositionAll: function() {
-      var song, _i, _len, _ref, _results;
-      _ref = this.models;
+      var i, songItem, _i, _len, _ref, _results;
+      _ref = this.view.$el.children();
       _results = [];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        song = _ref[_i];
-        _results.push(song.reposition());
+      for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
+        songItem = _ref[i];
+        _results.push(this.repositionOne(songItem, i));
       }
       return _results;
+    },
+    repositionOne: function(songItem, i) {
+      var position, song;
+      position = i + 1;
+      song = this.get(songItem.getAttribute('data-id'));
+      return song.set('position', position).save();
     }
   });
 
@@ -3026,7 +3082,10 @@ Backbone.sync = function(method, model, options, error) {
       li = new nep.SongView({
         model: song
       });
-      return this.$el.append(li.el);
+      this.$el.append(li.el);
+      if (li.model.attributes.name.length === 0) {
+        return li.edit();
+      }
     },
     remove: function(song) {
       return $("#song_" + song.id).remove();

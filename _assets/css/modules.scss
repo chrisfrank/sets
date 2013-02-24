@@ -4,9 +4,10 @@
   box-sizing: border-box;
   max-width: 32em;
   margin: 0 auto;
+  position: relative;
 }
 .sized {
-  max-width: 32em;
+  max-width: 30em;
   margin: 0 auto;
 }
 
@@ -17,6 +18,7 @@
 }
 
 .song {
+  -webkit-user-select: none;
   margin: 0;
   padding: 1em;
   display: block;
@@ -28,6 +30,12 @@
   text-shadow: none;
   -webkit-transform: translate3d(0,0,0);
   -webkit-user-select: none;
-
+  * { margin: 0; line-height: 1em; }
+  input {
+    color: white;
+    background: none;
+    border: none;
+    width: 100%;
+  }
 }
 .clone { visibility: hidden; }

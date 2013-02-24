@@ -5,7 +5,8 @@ nep.Song = Backbone.Model.extend
     name: ""
     position: @collection.next()
 
-  reposition: ->
+  reposition: (index) ->
+    $("#song_#{@id}").siblings().each ->
     @set 'position', ($("#song_#{@id}").index() + 1)
     @save()
 
@@ -18,11 +19,14 @@ nep.SongView = Backbone.View.extend
     'touchstart': 'ontouchstart'
     'touchmove': 'ontouchmove'
     'touchend': 'ontouchend'
+    'keypress': 'onkeypress'
+    'click': 'onclick'
   initialize: ->
     @draggable = false
     @render()
   render: ->
     this.$el.html(this.model.attributes.name)
+    this.$el.data 'id', this.model.attributes.id
     return this
   destroy: (e) ->
     this.model.destroy()
@@ -35,7 +39,7 @@ nep.SongView = Backbone.View.extend
     }
     @deltaY = 0
     @timer = window.setTimeout( =>
-      @clone = @$el.clone().addClass("clone").insertAfter(@el)
+      @clone = @$el.clone().attr('id','').addClass("clone").insertAfter(@el)
       @$el.addClass('is_dragging')
       @$el.css('top', @clone.offset().top)
       @draggable = true
@@ -74,6 +78,27 @@ nep.SongView = Backbone.View.extend
     @model.collection.repositionAll()
     @draggable = false
 
+  onkeypress: (e) ->
+    return unless e.keyCode == 13
+    @done()
+
+  onclick: (e) ->
+    e.preventDefault()
+    e.stopPropagation()
+
+  edit: ->
+    @input = $("<input type='text'>")
+    @input.appendTo(@$el).focus().on("blur", => @done())
+
+  done: ->
+    name = @input.val()
+    if name.length < 1
+      @model.destroy()
+    else
+      @model.set("name", name)
+      @model.save()
+      @render()
+
 nep.SetList = Backbone.Collection.extend
   model: nep.Song
   localStorage: new Backbone.LocalStorage "songs"
@@ -88,7 +113,12 @@ nep.SetList = Backbone.Collection.extend
     else
       this.last().get('position') + 1
   repositionAll: ->
-    song.reposition() for song in @models
+    @repositionOne(songItem,i) for songItem, i in @view.$el.children()
+
+  repositionOne: (songItem, i) ->
+    position = i+1
+    song = @get(songItem.getAttribute('data-id'))
+    song.set('position',position).save()
 
 nep.SetListView = Backbone.View.extend
   tagName: "ul"
@@ -116,6 +146,7 @@ nep.SetListView = Backbone.View.extend
     li = new nep.SongView
       model: song
     this.$el.append li.el
+    li.edit() if li.model.attributes.name.length == 0
 
   remove: (song) ->
     $("#song_#{song.id}").remove()

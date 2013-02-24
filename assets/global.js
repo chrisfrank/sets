@@ -3110,7 +3110,7 @@ Backbone.sync = function(method, model, options, error) {
 
   $(function() {
     nep.app.list = new nep.SetList;
-    return $("#send a").on('click', function(e) {
+    $("#send a").on('click', function(e) {
       var songs;
       songs = "";
       $(nep.app.list.models).each(function() {
@@ -3118,6 +3118,9 @@ Backbone.sync = function(method, model, options, error) {
       });
       return $(this).attr('href', "mailto:?subject=Set%20List&body=" + (encodeURIComponent(songs)));
     });
+    if (!Modernizr.touch) {
+      return $("#header .sized").append("<h2 style='color: yellow; text-align: center; '>Use a touchscreen!</h2>");
+    }
   });
 
 }).call(this);

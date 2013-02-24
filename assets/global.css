@@ -104,7 +104,8 @@ a {
   top: 0;
   left: 0;
   width: 100%;
-  min-width: 300px; }
+  min-width: 300px;
+  z-index: 10; }
   #header .sized {
     position: relative;
     padding: 1em; }

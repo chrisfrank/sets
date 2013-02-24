@@ -49,7 +49,8 @@ nep.SongView = Backbone.View.extend
   ontouchmove:(e) ->
     @deltaX = e.touches[0].pageX - @start.pageX
     @deltaT = Number(new Date() ) - @start.time
-    if @deltaT < 150 && Math.abs(@deltaX) > 50
+    if @deltaT < 150 && Math.abs(@deltaX) > 60
+      e.preventDefault()
       window.clearTimeout @timer
       @delete()
     return unless @draggable

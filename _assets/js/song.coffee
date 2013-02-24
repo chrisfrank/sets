@@ -23,6 +23,7 @@ nep.SongView = Backbone.View.extend
     'click': 'onclick'
   initialize: ->
     @draggable = false
+    @deletable = true
     @render()
   render: ->
     this.$el.html(this.model.attributes.name)
@@ -46,7 +47,11 @@ nep.SongView = Backbone.View.extend
     , 150)
 
   ontouchmove:(e) ->
-    window.clearTimeout @timer
+    @deltaX = e.touches[0].pageX - @start.pageX
+    @deltaT = Number(new Date() ) - @start.time
+    if @deltaT < 150 && Math.abs(@deltaX) > 50
+      window.clearTimeout @timer
+      @delete()
     return unless @draggable
     e.preventDefault()
     @last = if @deltaY? then @deltaY else 0
@@ -69,6 +74,7 @@ nep.SongView = Backbone.View.extend
         @clone.insertBefore prevElem
 
   ontouchend:(e) ->
+    window.clearTimeout @timer
     return unless @draggable
     e.preventDefault()
     @$el.removeClass('is_dragging').css('top','0').insertAfter(@clone)
@@ -98,6 +104,13 @@ nep.SongView = Backbone.View.extend
       @model.set("name", name)
       @model.save()
       @render()
+
+  delete: ->
+    return unless @deletable
+    @deletable = false
+    @$el.addClass('is_deleting').one "webkitTransitionEnd", =>
+      @model.destroy()
+      $('.is_deleting').remove()
 
 nep.SetList = Backbone.Collection.extend
   model: nep.Song

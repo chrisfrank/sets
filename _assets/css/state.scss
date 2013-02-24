@@ -4,8 +4,12 @@
 }
 .is_dragging {
   -webkit-transform: scale(1.025);
+  -webkit-transition: none;
   background-color: #303030;
   z-index: 10;
   position: absolute;
   width: 100%;
+}
+.is_deleting {
+  -webkit-transform: translate3d(-200%,0,0);
 }

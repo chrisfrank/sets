@@ -2929,7 +2929,8 @@ Backbone.sync = function(method, model, options, error) {
       var nextElem, prevElem, transform, _ref, _ref1;
       this.deltaX = e.touches[0].pageX - this.start.pageX;
       this.deltaT = Number(new Date()) - this.start.time;
-      if (this.deltaT < 150 && Math.abs(this.deltaX) > 50) {
+      if (this.deltaT < 150 && Math.abs(this.deltaX) > 60) {
+        e.preventDefault();
         window.clearTimeout(this.timer);
         this["delete"]();
       }

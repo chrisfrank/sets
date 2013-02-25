@@ -1,0 +1,183 @@
+@font-face {
+  font-family: 'typicons';
+  src: url("/fonts/typicons.eot");
+  src: url("/fonts/typicons.eot?#iefix") format("embedded-opentype"), url("/fonts/typicons.woff") format("woff"), url("/fonts/typicons.ttf") format("truetype"), url("/fonts/typicons.svg#typicons") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+/* Use the following CSS code if you want to use data attributes for inserting your icons */
+[data-icon]:before {
+  font-family: 'typicons';
+  content: attr(data-icon);
+  speak: none;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased; }
+
+/* Use the following CSS code if you want to have a class per icon */
+/*
+Instead of a list of all class selectors,
+you can use the generic selector below, but it's slower:
+[class*="icon-"]:before {
+*/
+.icon-list:before, .icon-mail:before, .icon-minus:before, .icon-equals:before {
+  font-family: 'typicons';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased; }
+
+.icon-list:before {
+  content: "\31"; }
+
+.icon-mail:before {
+  content: "\32"; }
+
+.icon-minus:before {
+  content: "\33"; }
+
+.icon-equals:before {
+  content: "\34"; }
+
+html {
+  background: #303030;
+  color: #e5e6e8;
+  font-family: sans-serif;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased; }
+
+.song {
+  border-top: 1px solid #444444;
+  border-bottom: 1px solid #222222;
+  text-shadow: 0 1px 0 white; }
+  .song input {
+    color: #e5e6e8;
+    -webkit-font-smoothing: antialiased;
+    font-family: sans-serif;
+    font-size: 1em;
+    font-weight: bold; }
+    .song input:focus {
+      outline: none; }
+
+.handle {
+  border-right: 1px solid #444444;
+  width: 2em; }
+  .handle * {
+    color: #ac4f4a;
+    text-shadow: none; }
+
+a {
+  background: #ac4f4a;
+  color: #e5e6e8;
+  border-radius: .25em; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  display: block; }
+
+body {
+  font-size: 14px;
+  line-height: 1.5em; }
+
+ul, ol {
+  padding: 0;
+  list-style: none;
+  margin: 0; }
+
+em {
+  font-style: normal;
+  font-weight: bold; }
+
+i {
+  font-style: normal; }
+
+a {
+  text-decoration: none; }
+
+#header {
+  margin: 0 auto;
+  height: 4em;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-width: 300px;
+  z-index: 10; }
+  #header .sized {
+    position: relative;
+    padding: 1em; }
+    #header .sized > * {
+      font-size: 1.5em;
+      line-height: 1.5em;
+      margin: 0;
+      padding: 0;
+      display: block; }
+    #header .sized a {
+      padding: 0.4em 0.5em 0.2em; }
+  #header h1 {
+    float: left; }
+  #header #send {
+    float: right;
+    text-align: right; }
+
+.setlist {
+  padding: 4em 0 6em;
+  min-height: 100%;
+  box-sizing: border-box;
+  max-width: 32em;
+  margin: 0 auto;
+  position: relative; }
+
+.sized {
+  max-width: 30em;
+  margin: 0 auto; }
+
+.setlist:empty:after {
+  content: "Tap to add a song.";
+  display: block;
+  padding: 1em; }
+
+.song {
+  margin: 0;
+  padding: 1em;
+  display: block;
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: move;
+  text-shadow: none;
+  -webkit-transform: translate3d(0, 0, 0);
+  -webkit-user-select: none;
+  -webkit-transition: all 0.4s; }
+  .song * {
+    margin: 0;
+    line-height: 1em; }
+  .song input {
+    color: white;
+    background: none;
+    border: none;
+    width: 100%;
+    padding: 0; }
+
+.clone {
+  visibility: hidden; }
+
+.is_editable input {
+  display: inline-block; }
+.is_editable h3 {
+  display: none; }
+
+.is_dragging {
+  -webkit-transform: scale(1.025);
+  -webkit-transition: none;
+  background-color: #303030;
+  z-index: 10;
+  position: absolute;
+  width: 100%; }
+
+.is_deleting {
+  -webkit-transform: translate3d(-200%, 0, 0); }

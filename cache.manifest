@@ -1,20 +1,3 @@
 CACHE MANIFEST
-# v35
-NETWORK:
-*
-
-CACHE:
-/assets/global.css
-/assets/global.js
-/images/mask.png
-/images/noise.png
-/images/touch-icon.png
-/fonts/plutosansheavy-webfont.woff
-/fonts/plutosansheavy-webfont.ttf
-/fonts/plutosansheavy-webfont.eot
-/fonts/plutosanslight-webfont.woff
-/fonts/plutosanslight-webfont.ttf
-/fonts/plutosanslight-webfont.eot
-/fonts/icomoon.woff
-/fonts/icomoon.ttf
-/fonts/icomoon.eot
+# v1
+index.html

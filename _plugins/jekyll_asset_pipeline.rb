@@ -23,4 +23,15 @@ module JekyllAssetPipeline
       return Sass::Engine.new(@content, syntax: :scss).render
     end
   end
+  class JavaScriptCompressor < JekyllAssetPipeline::Compressor
+    require 'uglifier'
+
+    def self.filetype
+      '.js'
+    end
+
+    def compress
+      return Uglifier.new.compile(@content)
+    end
+  end
 end
